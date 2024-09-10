@@ -61,12 +61,12 @@ def download_spark(
     if scala_version:
         spark_dir_name += f"-scala{scala_version}"
     LOGGER.info(f"Spark directory name: {spark_dir_name}")
+
     spark_url = spark_download_url / f"spark-{spark_version}" / f"{spark_dir_name}.tgz"
 
-    #spark_url = "https://archive.apache.org/dist/spark/spark-3.2.1/spark-3.2.1-bin-hadoop3.2-scala2.13.tgz"
-    #spark_dir_name = "spark-3.2.1-bin-hadoop3.2-scala2.13"
-
     tmp_file = Path("/tmp/spark.tar.gz")
+
+
     subprocess.check_call(
         ["curl", "--progress-bar", "--location", "--output", tmp_file, spark_url]
     )

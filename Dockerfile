@@ -2,7 +2,9 @@
 # Distributed under the terms of the Modified BSD License.
 ARG REGISTRY=quay.io
 ARG OWNER=jupyter
-ARG BASE_CONTAINER=$REGISTRY/$OWNER/scipy-notebook
+# See https://github.com/jupyter/docker-stacks/tree/main?tab=readme-ov-file#using-old-images
+ARG TAG=00987883e58d 
+ARG BASE_CONTAINER=$REGISTRY/$OWNER/scipy-notebook:$TAG
 FROM $BASE_CONTAINER
 
 ARG DBS_ROOT_CACERT_URL="https://mycoolartifactory.s3.ap-southeast-1.amazonaws.com/dbs-certs/dbs_cert.cer"
@@ -28,11 +30,12 @@ RUN apt-get update --yes && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # If spark_version is not set, latest stable Spark will be installed
-ARG spark_version="3.2.1"
-ARG hadoop_version="3.2"
+ARG spark_version="3.5.2"
+ARG hadoop_version="3"
 # If scala_version is not set, Spark without Scala will be installed
 ARG scala_version="2.13"
 # URL to use for Spark downloads
+# Recent versions: https://dlcdn.apache.org/spark/"
 # You need to use https://archive.apache.org/dist/spark/ website if you want to download old Spark versions
 # But it seems to be slower, that's why we use the recommended site for download
 ARG spark_download_url="https://archive.apache.org/dist/spark/"
